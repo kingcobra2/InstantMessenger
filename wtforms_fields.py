@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import InputRequired, Length, EqualTo
+from wtforms.validators import InputRequired, Length, EqualTo, ValidationError
+from models import *
+
 
 
 class RegistrationForm(FlaskForm):
@@ -10,3 +12,8 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('password_label',  validators=[InputRequired(message='Password required'), Length(min=4, max=25, message="Password must be between 4 and 25 characters")])
     confirm_pswd = PasswordField('confirm_pswd_label',  validators=[InputRequired(message='Confirm password'), EqualTo('password', message="Passwords must match")])
     submit_button = SubmitField('Create')
+
+    def validate_username(self, username):
+        user_object = User.query.filter_by(username=username.data).first()
+        if user_object:
+            raise ValidationError("User already exists. Select a different username.")
