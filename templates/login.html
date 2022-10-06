@@ -27,6 +27,12 @@
         <div>
             {{ form.submit_button }}   
         </div>
+        <br>
+        <div>
+            <button>
+                <a href="{{url_for('index')}}">Create an account</a>
+            </button>
+        </div>
 
         {{ form.csrf_token }}
 

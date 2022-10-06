@@ -4,7 +4,12 @@
 
 {% block content %}
     <h1>Get started</h1>
-
+    <div>
+        <button>
+            <a href="{{url_for('login')}}">Login</a>
+        </button>
+    </div>
+    <br>
     <form action="{{url_for('index')}}", method="POST">
         <div>
             {{ form.username(class='form-control', placeholder='Username', autocomplete='off', autofocus=true)}}
