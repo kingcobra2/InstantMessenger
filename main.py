@@ -4,10 +4,11 @@ from flask_login import LoginManager, login_required, login_user, current_user, 
 from wtforms_fields import *
 from models import *
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
+import os
 
 # Configure app
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'mysecretketthatnooneknows'
+app.config['SECRET_KEY'] = os.environ.get('SECRET')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #Initialize flask-socketio
@@ -17,7 +18,7 @@ ROOMS = ["lounge", "news", "games", "coding"]
 
 
 #Configure the database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://hhotlmfiiwsiiy:260d205aa0069230cad9ad9c7f1d8d95621b696991131c72249f18b3c150580f@ec2-3-92-98-129.compute-1.amazonaws.com:5432/d975kirgq1gbrq'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 db = SQLAlchemy(app)
 
 #Configure flask login
@@ -97,6 +98,6 @@ def leave(data):
 
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True)
+    app.run()
 
 
